@@ -6,7 +6,6 @@ lazy val root = project.in(file("."))
   .aggregate(
     scalatestJVM,
     scalatestJS,
-    docs,
   )
 
 lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
