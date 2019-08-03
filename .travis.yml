@@ -5,6 +5,10 @@ scala:
   - 2.13.0
 jdk:
   - openjdk8
+
+install: 
+  - gem install jekyll -v 2.5
+
 script:
   - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues
   - if [ "$TRAVIS_SCALA_VERSION" = "2.12.8" ]; then sbt docs/makeMicrosite; fi
