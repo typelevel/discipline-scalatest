@@ -1,0 +1,11 @@
+name: discipline-scalatest
+baseurl: /discipline-scalatest
+description: ScalaTest binding for Typelevel Discipline
+highlighter: rouge
+docs: true
+collections:
+  tut:
+    output: true
+version: 1.0.0-SNAPSHOT
+org: org.typelevel
+markdown: kramdown
