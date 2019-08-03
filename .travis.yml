@@ -7,4 +7,4 @@ jdk:
   - openjdk8
 script:
   - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues
-  - test $TRAVIS_SCALA_VERSION == "2.12.8" && sbt docs/makeMicrosite
+  - if [ "$TRAVIS_SCALA_VERSION" = "2.12.8" ]; then sbt docs/makeMicrosite; fi
