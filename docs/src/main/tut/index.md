@@ -3,7 +3,7 @@ layout: home
 
 ---
 
-# discipline-scalatest - ScalaTest binding for Typelevel Discipline [![Build Status](https://travis-ci.com/rossabaker/discipline-scalatest.svg?branch=master)](https://travis-ci.com/rossabaker/discipline-scalatest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.typelevel/discipline-scalatest_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.typelevel/discipline-scalatest_2.12)
+# discipline-scalatest - ScalaTest binding for Typelevel Discipline [![Build Status](https://travis-ci.com/rossabaker/discipline-scalatest.svg?branch=master)](https://travis-ci.com/typelevel/discipline-scalatest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.typelevel/discipline-scalatest_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.typelevel/discipline-scalatest_2.12)
 
 ## Quick Start
 
