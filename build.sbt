@@ -40,7 +40,7 @@ lazy val contributors = Seq(
 val betterMonadicForV = "0.3.1"
 val disciplineV = "1.0.0"
 val kindProjectorV = "0.10.3"
-val scalatestV = "3.1.0-RC2"
+val scalatestV = "3.2.0-M1"
 val scalatestplusScalacheckV = "3.1.0.0-RC2"
 
 // General Settings
