@@ -36,9 +36,7 @@ lazy val contributors = Seq(
   "rossabaker" -> "Ross A. Baker",
 )
 
-val betterMonadicForV = "0.3.1"
 val disciplineV = "1.0.1"
-val kindProjectorV = "0.10.3"
 val scalatestplusScalacheckV = "3.1.0.0-RC2"
 
 // General Settings
@@ -53,10 +51,7 @@ lazy val commonSettings = Seq(
       "-groups",
       "-sourcepath", (baseDirectory in LocalRootProject).value.getAbsolutePath,
       "-doc-source-url", "https://github.com/typelevel/discipline-scalatest/blob/v" + version.value + "€{FILE_PATH}.scala"
-  ),
-
-  addCompilerPlugin("org.typelevel" %% "kind-projector"     % kindProjectorV),
-  addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % betterMonadicForV),
+  )
 )
 
 lazy val releaseSettings = {
@@ -135,7 +130,7 @@ lazy val mimaSettings = {
     val minorVersions : List[Int] =
       if (major >= 1) Range(0, minor).inclusive.toList
       else List(minor)
-    def patchVersions(currentMinVersion: Int): List[Int] = 
+    def patchVersions(currentMinVersion: Int): List[Int] =
       if (minor == 0 && patch == 0) List.empty[Int]
       else if (currentMinVersion != minor) List(0)
       else Range(0, patch - 1).inclusive.toList
@@ -168,7 +163,7 @@ lazy val mimaSettings = {
     mimaFailOnProblem := mimaVersions(version.value).toList.headOption.isDefined,
     mimaPreviousArtifacts := (mimaVersions(version.value) ++ extraVersions)
       .filterNot(excludedVersions.contains(_))
-      .map{v => 
+      .map{v =>
         val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
         organization.value % moduleN % v
       },
