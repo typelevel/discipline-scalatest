@@ -36,7 +36,7 @@ lazy val contributors = Seq(
   "rossabaker" -> "Ross A. Baker",
 )
 
-val disciplineV = "1.0.1"
+val disciplineV = "1.0.2"
 val scalatestplusScalacheckV = "3.1.0.0-RC2"
 
 // General Settings
