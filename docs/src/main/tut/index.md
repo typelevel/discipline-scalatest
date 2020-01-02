@@ -43,17 +43,6 @@ class TruthSuite extends AnyFunSuite with Discipline {
 }
 ```
 
-As of 1.x, `Discipline` is no longer limited to `FunSuite`.  It works with any ScalaTest `TestRegistration`:
-
-```scala mdoc
-import org.scalatest.freespec.AnyFreeSpec
-import org.typelevel.discipline.scalatest.Discipline
-
-class TruthSpec extends AnyFreeSpec with Discipline {
-  checkAll("Truth", TruthLaws.truth)
-}
-```
-
 ## Compatibility
 
 discipline-scalatest-1.0.0-M1 works with:
