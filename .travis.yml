@@ -11,5 +11,5 @@ install:
   - gem install jekyll -v 4.0.0
 
 script:
-  - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues
+  - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues scalafmtSbtCheck scalafmtCheckAll
   - if [ "$TRAVIS_SCALA_VERSION" = "2.12.8" ]; then sbt docs/makeMicrosite; fi
