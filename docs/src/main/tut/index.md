@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
 
 Suppose we have the following laws for truth. More useful laws are published in projects like [`cats-laws`](https://github.com/typelevel/cats), [`cats-effect-laws`](https://github.com/typelevel/cats-effect), and [`spire-laws`](https://gihtub.com/typelevel/spire).
 
-```tut:book
+```scala mdoc
 import org.scalacheck.Prop
 import org.typelevel.discipline.Laws
 
@@ -34,22 +34,11 @@ object TruthLaws extends Laws {
 
 discipline-scalatest provides a `Discipline` mixin, whose `checkAll` helper lets us easily check the laws in ScalaTest:
 
-```tut:book
+```scala mdoc
 import org.scalatest.funsuite.AnyFunSuite
 import org.typelevel.discipline.scalatest.Discipline
 
 class TruthSuite extends AnyFunSuite with Discipline {
-  checkAll("Truth", TruthLaws.truth)
-}
-```
-
-As of 1.x, `Discipline` is no longer limited to `FunSuite`.  It works with any ScalaTest `TestRegistration`:
-
-```tut:book
-import org.scalatest.freespec.AnyFreeSpec
-import org.typelevel.discipline.scalatest.Discipline
-
-class TruthSpec extends AnyFreeSpec with Discipline {
   checkAll("Truth", TruthLaws.truth)
 }
 ```

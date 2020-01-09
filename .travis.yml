@@ -1,14 +1,29 @@
 language: scala
 scala:
   - 2.11.12
-  - 2.12.8
-  - 2.13.0
+  - 2.12.10
+  - 2.13.1
 jdk:
   - openjdk8
 
-install: 
-  - gem install jekyll -v 2.5
+install:
+  - gem install sass
+  - gem install jekyll -v 4.0.0
 
 script:
-  - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues
-  - if [ "$TRAVIS_SCALA_VERSION" = "2.12.8" ]; then sbt docs/makeMicrosite; fi
+  - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues scalafmtSbtCheck scalafmtCheckAll
+  - if [ "$TRAVIS_SCALA_VERSION" = "2.12.10" ]; then sbt docs/makeMicrosite; fi
+
+matrix:
+  include:
+    - scala: 2.11.12
+      env: SCALAJS_VERSION="0.6.31"
+      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test
+
+    - scala: 2.12.10
+      env: SCALAJS_VERSION="0.6.31"
+      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test
+
+    - scala: 2.13.1
+      env: SCALAJS_VERSION="0.6.31"
+      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test

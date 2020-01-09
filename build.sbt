@@ -1,11 +1,12 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-lazy val root = project.in(file("."))
+lazy val root = project
+  .in(file("."))
   .disablePlugins(MimaPlugin)
   .settings(commonSettings, releaseSettings, skipOnPublishSettings)
   .aggregate(
     scalatestJVM,
-    scalatestJS,
+    scalatestJS
   )
 
 lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
@@ -15,16 +16,17 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
   .settings(
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
-      "org.typelevel"     %%% "discipline-core"          % disciplineV,
-      "org.scalatestplus" %%% "scalatestplus-scalacheck" % scalatestplusScalacheckV,
-    ),
+      "org.typelevel" %%% "discipline-core" % disciplineV,
+      "org.scalatestplus" %%% "scalacheck-1-14" % scalatestplusScalacheckV
+    )
   )
   .jsSettings(scalaJSStage in Test := FastOptStage)
 
 lazy val scalatestJVM = scalatest.jvm
 lazy val scalatestJS = scalatest.js
 
-lazy val docs = project.in(file("docs"))
+lazy val docs = project
+  .in(file("docs"))
   .disablePlugins(MimaPlugin)
   .settings(commonSettings, skipOnPublishSettings, micrositeSettings)
   .dependsOn(scalatestJVM)
@@ -33,24 +35,24 @@ lazy val docs = project.in(file("docs"))
 
 lazy val contributors = Seq(
   "larsrh" -> "Lars Hupel",
-  "rossabaker" -> "Ross A. Baker",
+  "rossabaker" -> "Ross A. Baker"
 )
 
 val disciplineV = "1.0.2"
-val scalatestplusScalacheckV = "3.1.0.0-RC2"
+val scalatestplusScalacheckV = "3.1.0.1"
 
 // General Settings
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
-
-  scalaVersion := "2.12.8",
-  crossScalaVersions := Seq("2.13.0", scalaVersion.value, "2.11.12"),
+  scalaVersion := "2.12.10",
+  crossScalaVersions := Seq("2.13.1", scalaVersion.value, "2.11.12"),
   scalacOptions += "-Yrangepos",
-
   scalacOptions in (Compile, doc) ++= Seq(
-      "-groups",
-      "-sourcepath", (baseDirectory in LocalRootProject).value.getAbsolutePath,
-      "-doc-source-url", "https://github.com/typelevel/discipline-scalatest/blob/v" + version.value + "€{FILE_PATH}.scala"
+    "-groups",
+    "-sourcepath",
+    (baseDirectory in LocalRootProject).value.getAbsolutePath,
+    "-doc-source-url",
+    "https://github.com/typelevel/discipline-scalatest/blob/v" + version.value + "€{FILE_PATH}.scala"
   )
 )
 
@@ -76,21 +78,20 @@ lazy val releaseSettings = {
     publishTo := {
       val nexus = "https://oss.sonatype.org/"
       if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
+        Some("snapshots".at(nexus + "content/repositories/snapshots"))
       else
-        Some("releases" at nexus + "service/local/staging/deploy/maven2")
+        Some("releases".at(nexus + "service/local/staging/deploy/maven2"))
     },
     credentials ++= (
       for {
         username <- Option(System.getenv().get("SONATYPE_USERNAME"))
         password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
-      } yield
-        Credentials(
-          "Sonatype Nexus Repository Manager",
-          "oss.sonatype.org",
-          username,
-          password
-        )
+      } yield Credentials(
+        "Sonatype Nexus Repository Manager",
+        "oss.sonatype.org",
+        username,
+        password
+      )
     ).toSeq,
     publishArtifact in Test := false,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
@@ -108,13 +109,11 @@ lazy val releaseSettings = {
     },
     pomExtra := {
       <developers>
-        {for ((username, name) <- contributors) yield
-        <developer>
+        {for ((username, name) <- contributors) yield <developer>
           <id>{username}</id>
           <name>{name}</name>
           <url>http://github.com/{username}</url>
-        </developer>
-        }
+        </developer>}
       </developers>
     }
   )
@@ -127,7 +126,7 @@ lazy val mimaSettings = {
     val majorVersions: List[Int] =
       if (major == 0 && minor == 0) List.empty[Int] // If 0.0.x do not check MiMa
       else List(major)
-    val minorVersions : List[Int] =
+    val minorVersions: List[Int] =
       if (major >= 1) Range(0, minor).inclusive.toList
       else List(minor)
     def patchVersions(currentMinVersion: Int): List[Int] =
@@ -143,15 +142,14 @@ lazy val mimaSettings = {
     versions.toSet
   }
 
-  def mimaVersions(version: String): Set[String] = {
+  def mimaVersions(version: String): Set[String] =
     Version(version) match {
       case Some(Version(major, Seq(minor, patch), _)) =>
         semverBinCompatVersions(major.toInt, minor.toInt, patch.toInt)
-          .map{case (maj, min, pat) => maj.toString + "." + min.toString + "." + pat.toString}
+          .map { case (maj, min, pat) => maj.toString + "." + min.toString + "." + pat.toString }
       case _ =>
         Set.empty[String]
     }
-  }
   // Safety Net For Exclusions
   lazy val excludedVersions: Set[String] = Set()
 
@@ -163,7 +161,7 @@ lazy val mimaSettings = {
     mimaFailOnProblem := mimaVersions(version.value).toList.headOption.isDefined,
     mimaPreviousArtifacts := (mimaVersions(version.value) ++ extraVersions)
       .filterNot(excludedVersions.contains(_))
-      .map{v =>
+      .map { v =>
         val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
         organization.value % moduleN % v
       },
@@ -210,10 +208,21 @@ lazy val micrositeSettings = {
     micrositePushSiteWith := GitHub4s,
     micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
     micrositeExtraMdFiles := Map(
-        file("CHANGELOG.md")        -> ExtraMdFileConfig("changelog.md", "page", Map("title" -> "changelog", "section" -> "changelog", "position" -> "100")),
-        file("CODE_OF_CONDUCT.md")  -> ExtraMdFileConfig("code-of-conduct.md",   "page", Map("title" -> "code of conduct",   "section" -> "code of conduct",   "position" -> "101")),
-        file("LICENSE")             -> ExtraMdFileConfig("license.md",   "page", Map("title" -> "license",   "section" -> "license",   "position" -> "102"))
-    )
+      file("CHANGELOG.md") -> ExtraMdFileConfig("changelog.md",
+                                                "page",
+                                                Map("title" -> "changelog",
+                                                    "section" -> "changelog",
+                                                    "position" -> "100")),
+      file("CODE_OF_CONDUCT.md") -> ExtraMdFileConfig("code-of-conduct.md",
+                                                      "page",
+                                                      Map("title" -> "code of conduct",
+                                                          "section" -> "code of conduct",
+                                                          "position" -> "101")),
+      file("LICENSE") -> ExtraMdFileConfig("license.md",
+                                           "page",
+                                           Map("title" -> "license", "section" -> "license", "position" -> "102"))
+    ),
+    mdocIn := file("docs/src/main/tut")
   )
 }
 

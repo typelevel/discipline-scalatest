@@ -1,16 +1,15 @@
 package org.typelevel.discipline
 package scalatest
 
-import org.scalatest.TestRegistration
+import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatestplus.scalacheck.Checkers
 
-trait Discipline extends Checkers { self: TestRegistration =>
+trait Discipline extends Checkers { self: AnyFunSuiteLike =>
 
-  def checkAll(name: String, ruleSet: Laws#RuleSet): Unit = {
+  def checkAll(name: String, ruleSet: Laws#RuleSet): Unit =
     for ((id, prop) <- ruleSet.all.properties)
-      registerTest(s"${name}.${id}") {
+      test(s"${name}.${id}") {
         check(prop)
       }
-  }
 
 }
