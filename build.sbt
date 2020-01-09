@@ -95,6 +95,7 @@ lazy val releaseSettings = {
     ).toSeq,
     publishArtifact in Test := false,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    releaseVcsSign := true,
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/typelevel/discipline-scalatest"),
