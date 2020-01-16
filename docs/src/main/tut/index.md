@@ -32,13 +32,13 @@ object TruthLaws extends Laws {
 }
 ```
 
-discipline-scalatest provides a `Discipline` mixin, whose `checkAll` helper lets us easily check the laws in ScalaTest:
+discipline-scalatest provides a `FunSuiteDiscipline` mixin (as well as similar traits for `FlatSpec` and `FunSpec`), whose `checkAll` helper lets us easily check the laws in ScalaTest:
 
 ```scala mdoc
 import org.scalatest.funsuite.AnyFunSuite
-import org.typelevel.discipline.scalatest.Discipline
+import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 
-class TruthSuite extends AnyFunSuite with Discipline {
+class TruthSuite extends AnyFunSuite with FunSuiteDiscipline {
   checkAll("Truth", TruthLaws.truth)
 }
 ```
