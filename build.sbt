@@ -35,7 +35,8 @@ lazy val docs = project
 
 lazy val contributors = Seq(
   "larsrh" -> "Lars Hupel",
-  "rossabaker" -> "Ross A. Baker"
+  "rossabaker" -> "Ross A. Baker",
+  "travisbrown" -> "Travis Brown"
 )
 
 val disciplineV = "1.0.2"
