@@ -4,8 +4,9 @@ package scalatest
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.Checkers
 
-trait DummyBase extends Discipline {
+trait DummyBase extends Discipline with Checkers {
   checkAll("Dummy", DummyLaws.dummy)
 }
 
