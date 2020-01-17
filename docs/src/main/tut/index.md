@@ -36,9 +36,10 @@ discipline-scalatest provides a `FunSuiteDiscipline` mixin (as well as similar t
 
 ```scala mdoc
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.Checkers
 import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 
-class TruthSuite extends AnyFunSuite with FunSuiteDiscipline {
+class TruthSuite extends AnyFunSuite with FunSuiteDiscipline with Checkers {
   checkAll("Truth", TruthLaws.truth)
 }
 ```
