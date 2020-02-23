@@ -106,16 +106,16 @@ lazy val releaseSettings = {
     homepage := Some(url("https://github.com/typelevel/discipline-scalatest")),
     licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
     publishMavenStyle := true,
-    pomIncludeRepository := { _ =>
-      false
-    },
+    pomIncludeRepository := { _ => false },
     pomExtra := {
       <developers>
-        {for ((username, name) <- contributors) yield <developer>
+        {
+        for ((username, name) <- contributors) yield <developer>
           <id>{username}</id>
           <name>{name}</name>
           <url>http://github.com/{username}</url>
-        </developer>}
+        </developer>
+      }
       </developers>
     }
   )
