@@ -13,17 +13,3 @@ install:
 script:
   - sbt "++ ${TRAVIS_SCALA_VERSION}!" test mimaReportBinaryIssues scalafmtSbtCheck scalafmtCheckAll
   - if [ "$TRAVIS_SCALA_VERSION" = "2.12.10" ]; then sbt docs/makeMicrosite; fi
-
-matrix:
-  include:
-    - scala: 2.11.12
-      env: SCALAJS_VERSION="0.6.31"
-      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test
-
-    - scala: 2.12.10
-      env: SCALAJS_VERSION="0.6.31"
-      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test
-
-    - scala: 2.13.1
-      env: SCALAJS_VERSION="0.6.31"
-      script: sbt ++$TRAVIS_SCALA_VERSION! scalatestJS/test
