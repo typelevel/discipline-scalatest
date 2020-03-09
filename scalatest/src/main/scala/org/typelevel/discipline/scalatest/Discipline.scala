@@ -7,6 +7,7 @@ import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.funspec.AnyFunSpecLike
 import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatest.prop.Configuration
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.scalacheck.Checkers
 
 trait Discipline { self: Configuration =>
@@ -66,6 +67,17 @@ trait FunSuiteDiscipline extends Discipline { self: AnyFunSuiteLike with Configu
                                                           pos: Position): Unit =
     for ((id, prop) <- ruleSet.all.properties)
       test(s"${name}.${id}") {
+        Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
+      }
+}
+
+trait WordSpecDiscipline extends Discipline { self: AnyWordSpec with Configuration =>
+
+  def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
+                                                    prettifier: Prettifier,
+                                                    pos: Position): Unit =
+    for ((id, prop) <- ruleSet.all.properties)
+      registerTest(s"${name}.${id}") {
         Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
       }
 }
