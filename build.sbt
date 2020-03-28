@@ -223,8 +223,7 @@ lazy val micrositeSettings = {
       file("LICENSE") -> ExtraMdFileConfig("license.md",
                                            "page",
                                            Map("title" -> "license", "section" -> "license", "position" -> "102"))
-    ),
-    mdocIn := file("docs/src/main/tut")
+    )
   )
 }
 
