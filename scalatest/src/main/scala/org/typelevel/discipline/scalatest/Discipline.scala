@@ -31,15 +31,17 @@ trait Discipline { self: Configuration =>
       config.workers
     )
 
-  def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
-                                                    prettifier: Prettifier,
-                                                    pos: Position): Unit
+  def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit
+    config: PropertyCheckConfiguration,
+    prettifier: Prettifier,
+    pos: Position
+  ): Unit
 }
 
 trait FlatSpecDiscipline extends Discipline { self: AnyFlatSpecLike with Configuration =>
-  final def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
-                                                          prettifier: Prettifier,
-                                                          pos: Position): Unit =
+  final def checkAll(name: String,
+                     ruleSet: Laws#RuleSet
+  )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
     ruleSet.all.properties match {
       case first +: rest =>
         name should first._1 in Checkers.check(first._2)(convertConfiguration(config), prettifier, pos)
@@ -50,9 +52,9 @@ trait FlatSpecDiscipline extends Discipline { self: AnyFlatSpecLike with Configu
 }
 
 trait FunSpecDiscipline extends Discipline { self: AnyFunSpecLike with Configuration =>
-  final def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
-                                                          prettifier: Prettifier,
-                                                          pos: Position): Unit =
+  final def checkAll(name: String,
+                     ruleSet: Laws#RuleSet
+  )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
     describe(name) {
       for ((id, prop) <- ruleSet.all.properties)
         it(id) {
@@ -62,9 +64,9 @@ trait FunSpecDiscipline extends Discipline { self: AnyFunSpecLike with Configura
 }
 
 trait FunSuiteDiscipline extends Discipline { self: AnyFunSuiteLike with Configuration =>
-  final def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
-                                                          prettifier: Prettifier,
-                                                          pos: Position): Unit =
+  final def checkAll(name: String,
+                     ruleSet: Laws#RuleSet
+  )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
     for ((id, prop) <- ruleSet.all.properties)
       test(s"${name}.${id}") {
         Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
@@ -73,9 +75,9 @@ trait FunSuiteDiscipline extends Discipline { self: AnyFunSuiteLike with Configu
 
 trait WordSpecDiscipline extends Discipline { self: AnyWordSpec with Configuration =>
 
-  def checkAll(name: String, ruleSet: Laws#RuleSet)(implicit config: PropertyCheckConfiguration,
-                                                    prettifier: Prettifier,
-                                                    pos: Position): Unit =
+  def checkAll(name: String,
+               ruleSet: Laws#RuleSet
+  )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
     for ((id, prop) <- ruleSet.all.properties)
       registerTest(s"${name}.${id}") {
         Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
