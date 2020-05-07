@@ -9,10 +9,11 @@ object Dummy {
 }
 
 object DummyLaws extends Laws {
-  def dummy = new DefaultRuleSet(
-    name = "dummy",
-    parent = None,
-    "true" -> Dummy.prop,
-    "alsoTrue" -> Dummy.prop2
-  )
+  def dummy =
+    new DefaultRuleSet(
+      name = "dummy",
+      parent = None,
+      "true" -> Dummy.prop,
+      "alsoTrue" -> Dummy.prop2
+    )
 }
