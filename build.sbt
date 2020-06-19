@@ -40,7 +40,7 @@ lazy val contributors = Seq(
 )
 
 val disciplineV = "1.0.2"
-val scalatestplusScalacheckV = "3.1.2.0"
+val scalatestplusScalacheckV = "3.2.0.0"
 
 // General Settings
 lazy val commonSettings = Seq(
