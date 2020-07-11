@@ -110,7 +110,8 @@ lazy val releaseSettings = {
     pomExtra := {
       <developers>
         {
-        for ((username, name) <- contributors) yield <developer>
+        for ((username, name) <- contributors)
+          yield <developer>
           <id>{username}</id>
           <name>{name}</name>
           <url>http://github.com/{username}</url>
