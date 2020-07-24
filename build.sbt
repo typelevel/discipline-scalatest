@@ -17,7 +17,8 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-14" % scalatestplusScalacheckV
+      "org.scalatestplus" %%% "scalacheck-1-14" % scalatestplusScalacheckV,
+      "org.scalatest" %%% "scalatest" % "3.2.0"
     )
   )
   .jsSettings(scalaJSStage in Test := FastOptStage)
