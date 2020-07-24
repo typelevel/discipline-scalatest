@@ -46,8 +46,8 @@ val scalatestplusScalacheckV = "3.2.0.0"
 // General Settings
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
-  scalaVersion := "2.12.10",
-  crossScalaVersions := Seq("2.13.1", scalaVersion.value, "2.11.12"),
+  scalaVersion := "2.12.11",
+  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12"),
   scalacOptions += "-Yrangepos",
   scalacOptions in (Compile, doc) ++= Seq(
     "-groups",
