@@ -17,11 +17,14 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-14" % scalatestplusScalacheckV,
+      "org.scalatestplus" %%% "scalacheck-1-14" % "3.2.1.0",
       "org.scalatest" %%% "scalatest" % "3.2.1"
     )
   )
-  .jsSettings(scalaJSStage in Test := FastOptStage)
+  .jsSettings(
+    scalaJSStage in Test := FastOptStage,
+    crossScalaVersions := crossScalaVersions.value.init
+  )
 
 lazy val scalatestJVM = scalatest.jvm
 lazy val scalatestJS = scalatest.js
@@ -41,14 +44,13 @@ lazy val contributors = Seq(
 )
 
 val disciplineV = "1.0.3"
-val scalatestplusScalacheckV = "3.2.1.0"
 
 // General Settings
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
   scalaVersion := "2.12.11",
-  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12"),
-  scalacOptions += "-Yrangepos",
+  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "0.26.0-RC1"),
+  scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
   scalacOptions in (Compile, doc) ++= Seq(
     "-groups",
     "-sourcepath",
