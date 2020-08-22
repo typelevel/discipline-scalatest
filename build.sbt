@@ -18,7 +18,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
       "org.scalatestplus" %%% "scalacheck-1-14" % "3.2.2.0",
-      "org.scalatest" %%% "scalatest" % "3.2.1"
+      "org.scalatest" %%% "scalatest" % "3.2.2"
     )
   )
   .jsSettings(
