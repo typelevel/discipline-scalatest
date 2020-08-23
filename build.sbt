@@ -4,6 +4,7 @@ lazy val root = project
   .in(file("."))
   .disablePlugins(MimaPlugin)
   .settings(commonSettings, releaseSettings, skipOnPublishSettings)
+  .settings(crossScalaVersions := Nil)
   .aggregate(
     scalatestJVM,
     scalatestJS
@@ -19,7 +20,14 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
       "org.typelevel" %%% "discipline-core" % disciplineV,
       "org.scalatestplus" %%% "scalacheck-1-14" % "3.2.2.0",
       "org.scalatest" %%% "scalatest" % "3.2.2"
-    )
+    ),
+    Compile / doc / sources := {
+      val old = (Compile / doc / sources).value
+      if (isDotty.value)
+        Seq()
+      else
+        old
+    }
   )
   .jsSettings(
     scalaJSStage in Test := FastOptStage,
