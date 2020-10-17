@@ -57,7 +57,7 @@ val disciplineV = "1.0.3"
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
   scalaVersion := "2.12.11",
-  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "0.26.0-RC1"),
+  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "0.27.0-RC1"),
   scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
   scalacOptions in (Compile, doc) ++= Seq(
     "-groups",
