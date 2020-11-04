@@ -18,7 +18,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-14" % "3.2.2.0",
+      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.2.0",
       "org.scalatest" %%% "scalatest" % "3.2.2"
     ),
     Compile / doc / sources := {
@@ -51,7 +51,7 @@ lazy val contributors = Seq(
   "travisbrown" -> "Travis Brown"
 )
 
-val disciplineV = "1.0.3"
+val disciplineV = "1.1.0"
 
 // General Settings
 lazy val commonSettings = Seq(
