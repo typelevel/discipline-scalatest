@@ -18,8 +18,8 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.2.0",
-      "org.scalatest" %%% "scalatest" % "3.2.2"
+      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.3.0",
+      "org.scalatest" %%% "scalatest" % "3.2.3"
     ),
     Compile / doc / sources := {
       val old = (Compile / doc / sources).value
@@ -57,7 +57,7 @@ val disciplineV = "1.1.2"
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
   scalaVersion := "2.12.11",
-  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "0.27.0-RC1"),
+  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "3.0.0-M1"),
   scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
   scalacOptions in (Compile, doc) ++= Seq(
     "-groups",
