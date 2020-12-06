@@ -1,4 +1,31 @@
-import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
+val Scala212 = "2.12.11"
+
+ThisBuild / crossScalaVersions := Seq("2.13.3", Scala212, "2.11.12", "3.0.0-M1")
+ThisBuild / scalaVersion := Scala212
+
+val MicrositesCond = s"matrix.scala == '$Scala212'"
+
+ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+
+ThisBuild / githubWorkflowBuildPreamble ++= Seq(
+  WorkflowStep.Use(
+    "ruby",
+    "setup-ruby",
+    "v1",
+    params = Map("ruby-version" -> "2.6"),
+    cond = Some(MicrositesCond)
+  ),
+  WorkflowStep.Run(List("gem install sass"), cond = Some(MicrositesCond)),
+  WorkflowStep.Run(List("gem install jekyll -v 4.0.0"), cond = Some(MicrositesCond))
+)
+
+ThisBuild / githubWorkflowBuild := Seq(
+  WorkflowStep.Sbt(
+    List("test", "scalafmtSbtCheck", "scalafmtCheckAll", "mimaReportBinaryIssues"),
+    name = Some("Validate unit tests and binary compatibility")
+  ),
+  WorkflowStep.Sbt(List("docs/makeMicrosite"), cond = Some(MicrositesCond))
+)
 
 lazy val root = project
   .in(file("."))
@@ -56,8 +83,6 @@ val disciplineV = "1.1.2"
 // General Settings
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
-  scalaVersion := "2.12.11",
-  crossScalaVersions := Seq("2.13.3", scalaVersion.value, "2.11.12", "3.0.0-M1"),
   scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
   scalacOptions in (Compile, doc) ++= Seq(
     "-groups",
@@ -173,12 +198,17 @@ lazy val mimaSettings = {
   Seq(
     mimaFailOnNoPrevious := false,
     mimaFailOnProblem := mimaVersions(version.value).toList.headOption.isDefined,
-    mimaPreviousArtifacts := (mimaVersions(version.value) ++ extraVersions)
-      .filterNot(excludedVersions.contains(_))
-      .map { v =>
-        val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
-        organization.value % moduleN % v
-      },
+    mimaPreviousArtifacts := {
+      if (isDotty.value)
+        Set()
+      else
+        (mimaVersions(version.value) ++ extraVersions)
+          .filterNot(excludedVersions.contains(_))
+          .map { v =>
+            val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
+            organization.value % moduleN % v
+          }
+    },
     mimaBinaryIssueFilters ++= {
       import com.typesafe.tools.mima.core._
       import com.typesafe.tools.mima.core.ProblemFilters._
