@@ -1,6 +1,6 @@
 val Scala212 = "2.12.11"
 
-ThisBuild / crossScalaVersions := Seq("2.13.3", Scala212, "2.11.12", "3.0.0-M1")
+ThisBuild / crossScalaVersions := Seq("2.13.3", Scala212, "2.11.12", "3.0.0-M1", "3.0.0-M2")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
@@ -58,7 +58,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     scalaJSStage in Test := FastOptStage,
-    crossScalaVersions := crossScalaVersions.value.init
+    crossScalaVersions := crossScalaVersions.value.filter(_.startsWith("2."))
   )
 
 lazy val scalatestJVM = scalatest.jvm
