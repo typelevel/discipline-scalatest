@@ -198,12 +198,17 @@ lazy val mimaSettings = {
   Seq(
     mimaFailOnNoPrevious := false,
     mimaFailOnProblem := mimaVersions(version.value).toList.headOption.isDefined,
-    mimaPreviousArtifacts := (mimaVersions(version.value) ++ extraVersions)
-      .filterNot(excludedVersions.contains(_))
-      .map { v =>
-        val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
-        organization.value % moduleN % v
-      },
+    mimaPreviousArtifacts := {
+      if (isDotty.value)
+        Set()
+      else
+        (mimaVersions(version.value) ++ extraVersions)
+          .filterNot(excludedVersions.contains(_))
+          .map { v =>
+            val moduleN = moduleName.value + "_" + scalaBinaryVersion.value.toString
+            organization.value % moduleN % v
+          }
+    },
     mimaBinaryIssueFilters ++= {
       import com.typesafe.tools.mima.core._
       import com.typesafe.tools.mima.core.ProblemFilters._
