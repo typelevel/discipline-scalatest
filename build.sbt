@@ -1,6 +1,6 @@
 val Scala212 = "2.12.11"
 
-ThisBuild / crossScalaVersions := Seq("2.13.3", Scala212, "2.11.12", "3.0.0-M2", "3.0.0-M3")
+ThisBuild / crossScalaVersions := Seq("2.13.4", Scala212, "2.11.12", "3.0.0-M2", "3.0.0-M3")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
