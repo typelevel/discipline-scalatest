@@ -43,7 +43,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.5.0",
+      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.6.0",
       "org.scalatest" %%% "scalatest" % "3.2.5"
     ),
     Compile / doc / sources := {
