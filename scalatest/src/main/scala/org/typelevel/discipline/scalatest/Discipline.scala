@@ -42,12 +42,14 @@ trait FlatSpecDiscipline extends Discipline { self: AnyFlatSpecLike with Configu
   final def checkAll(name: String,
                      ruleSet: Laws#RuleSet
   )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
-    ruleSet.all.properties match {
-      case first +: rest =>
+    ruleSet.all.properties.toList match {
+      case first :: rest =>
         name should first._1 in Checkers.check(first._2)(convertConfiguration(config), prettifier, pos)
 
         for ((id, prop) <- rest)
           it should id in Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
+
+      case Nil =>
     }
 }
 
