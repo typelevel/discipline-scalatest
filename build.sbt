@@ -1,4 +1,4 @@
-val Scala212 = "2.12.11"
+val Scala212 = "2.12.13"
 
 ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC1")
 ThisBuild / scalaVersion := Scala212
@@ -35,7 +35,7 @@ lazy val root = project
     scalatestJS
   )
 
-lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
+lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("scalatest"))
   .settings(commonSettings, releaseSettings, mimaSettings)
@@ -58,9 +58,16 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform)
     scalaJSStage in Test := FastOptStage,
     crossScalaVersions := crossScalaVersions.value.filter(_.startsWith("2."))
   )
+  .nativeSettings(
+    nativeConfig ~= {
+      _.withMode(scalanative.build.Mode.releaseFast)
+    },
+    crossScalaVersions := crossScalaVersions.value.filter(_.startsWith("2."))
+  )
 
 lazy val scalatestJVM = scalatest.jvm
 lazy val scalatestJS = scalatest.js
+lazy val scalatestNative = scalatest.native
 
 lazy val docs = project
   .in(file("docs"))
