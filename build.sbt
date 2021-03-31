@@ -32,7 +32,8 @@ lazy val root = project
   .settings(crossScalaVersions := Nil)
   .aggregate(
     scalatestJVM,
-    scalatestJS
+    scalatestJS,
+    scalatestNative
   )
 
 lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
