@@ -1,6 +1,6 @@
 val Scala212 = "2.12.13"
 
-ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC1")
+ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC2")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
@@ -44,8 +44,8 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.6.0",
-      "org.scalatest" %%% "scalatest" % "3.2.6"
+      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.7.0",
+      "org.scalatest" %%% "scalatest" % "3.2.7"
     ),
     Compile / doc / sources := {
       val old = (Compile / doc / sources).value
