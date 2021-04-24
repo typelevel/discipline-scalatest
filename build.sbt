@@ -1,6 +1,6 @@
 val Scala212 = "2.12.13"
 
-ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC2")
+ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC3")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
@@ -44,8 +44,8 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     moduleName := "discipline-scalatest",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
-      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.7.0",
-      "org.scalatest" %%% "scalatest" % "3.2.7"
+      "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.8.0",
+      "org.scalatest" %%% "scalatest" % "3.2.8"
     ),
     Compile / doc / sources := {
       val old = (Compile / doc / sources).value
@@ -56,7 +56,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     }
   )
   .jsSettings(
-    scalaJSStage in Test := FastOptStage
+    Test / scalaJSStage := FastOptStage
   )
   .nativeSettings(
     nativeConfig ~= {
@@ -88,10 +88,10 @@ val disciplineV = "1.1.4"
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
   scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
-  scalacOptions in (Compile, doc) ++= Seq(
+  Compile / doc / scalacOptions ++= Seq(
     "-groups",
     "-sourcepath",
-    (baseDirectory in LocalRootProject).value.getAbsolutePath,
+    (LocalRootProject / baseDirectory).value.getAbsolutePath,
     "-doc-source-url",
     "https://github.com/typelevel/discipline-scalatest/blob/v" + version.value + "€{FILE_PATH}.scala"
   )
@@ -134,7 +134,7 @@ lazy val releaseSettings = {
         password
       )
     ).toSeq,
-    publishArtifact in Test := false,
+    Test / publishArtifact := false,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     releaseVcsSign := true,
     scmInfo := Some(
@@ -270,7 +270,7 @@ lazy val micrositeSettings = {
 }
 
 lazy val skipOnPublishSettings = Seq(
-  skip in publish := true,
+  publish / skip := true,
   publish := (()),
   publishLocal := (()),
   publishArtifact := false,
