@@ -1,6 +1,6 @@
 val Scala212 = "2.12.13"
 
-ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0-RC3")
+ThisBuild / crossScalaVersions := Seq("2.13.5", Scala212, "3.0.0")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
@@ -82,7 +82,7 @@ lazy val contributors = Seq(
   "travisbrown" -> "Travis Brown"
 )
 
-val disciplineV = "1.1.4"
+val disciplineV = "1.1.5"
 
 // General Settings
 lazy val commonSettings = Seq(
