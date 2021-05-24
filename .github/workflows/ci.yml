@@ -9,9 +9,9 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: ['*']
+    branches: ['**']
   push:
-    branches: ['*']
+    branches: ['**']
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,10 +60,10 @@ jobs:
         run: gem install jekyll -v 4.0.0
 
       - name: Check that workflows are up to date
-        run: sbt ++${{ matrix.scala }} githubWorkflowCheck
+        run: sbt --client '++${{ matrix.scala }}; githubWorkflowCheck'
 
       - name: Validate unit tests and binary compatibility
-        run: sbt ++${{ matrix.scala }} test scalafmtSbtCheck scalafmtCheckAll mimaReportBinaryIssues
+        run: sbt --client '++${{ matrix.scala }}; test; scalafmtSbtCheck; scalafmtCheckAll; mimaReportBinaryIssues'
 
       - if: matrix.scala == '2.12.13'
-        run: sbt ++${{ matrix.scala }} docs/makeMicrosite
+        run: sbt --client '++${{ matrix.scala }}; docs/makeMicrosite'
