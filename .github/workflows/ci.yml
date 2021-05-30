@@ -66,4 +66,4 @@ jobs:
         run: sbt --client '++${{ matrix.scala }}; test; scalafmtSbtCheck; scalafmtCheckAll; mimaReportBinaryIssues'
 
       - if: matrix.scala == '2.12.14'
-        run: sbt ++${{ matrix.scala }} docs/makeMicrosite
+        run: sbt --client '++${{ matrix.scala }}; docs/makeMicrosite'
