@@ -45,7 +45,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % disciplineV,
       "org.scalatestplus" %%% "scalacheck-1-15" % "3.2.9.0",
-      "org.scalatest" %%% "scalatest" % "3.2.9"
+      "org.scalatest" %%% "scalatest" % "3.2.10"
     ),
     Compile / doc / sources := {
       val old = (Compile / doc / sources).value
