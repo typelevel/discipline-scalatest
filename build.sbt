@@ -1,6 +1,6 @@
 val Scala212 = "2.12.15"
 
-ThisBuild / crossScalaVersions := Seq("2.13.6", Scala212, "3.0.1")
+ThisBuild / crossScalaVersions := Seq("2.13.6", Scala212, "3.0.2")
 ThisBuild / scalaVersion := Scala212
 
 val MicrositesCond = s"matrix.scala == '$Scala212'"
@@ -49,7 +49,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     ),
     Compile / doc / sources := {
       val old = (Compile / doc / sources).value
-      if (isDotty.value)
+      if (ScalaArtifacts.isScala3(scalaVersion.value))
         Seq()
       else
         old
@@ -87,7 +87,7 @@ val disciplineV = "1.1.5"
 // General Settings
 lazy val commonSettings = Seq(
   organization := "org.typelevel",
-  scalacOptions ++= (if (isDotty.value) Nil else Seq("-Yrangepos")),
+  scalacOptions ++= (if (ScalaArtifacts.isScala3(scalaVersion.value)) Nil else Seq("-Yrangepos")),
   Compile / doc / scalacOptions ++= Seq(
     "-groups",
     "-sourcepath",
@@ -203,7 +203,7 @@ lazy val mimaSettings = {
     mimaFailOnNoPrevious := false,
     mimaFailOnProblem := mimaVersions(version.value).toList.headOption.isDefined,
     mimaPreviousArtifacts := {
-      if (isDotty.value)
+      if (ScalaArtifacts.isScala3(scalaVersion.value))
         Set()
       else
         (mimaVersions(version.value) ++ extraVersions)
