@@ -30,6 +30,6 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
 
 lazy val docs = project
   .in(file("site"))
-  .settings(tlSiteRelatedProjects += Seq(TypelevelProject.Discipline))
+  .settings(tlSiteRelatedProjects ++= Seq(TypelevelProject.Discipline))
   .dependsOn(scalatest.jvm)
   .enablePlugins(TypelevelSitePlugin)
