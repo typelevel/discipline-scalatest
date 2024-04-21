@@ -30,6 +30,20 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
 
 lazy val docs = project
   .in(file("site"))
-  .settings(tlSiteRelatedProjects ++= Seq(TypelevelProject.Discipline))
+  .settings(
+    tlSiteHelium ~= {
+      import laika.helium.config.*
+      _.site.mainNavigation(
+        appendLinks = Seq(
+          ThemeNavigationSection(
+            "Related Projects", {
+              val (text, url) = TypelevelProject.Discipline
+              TextLink.external(url.toString(), text)
+            }
+          )
+        )
+      )
+    }
+  )
   .dependsOn(scalatest.jvm)
   .enablePlugins(TypelevelSitePlugin)
