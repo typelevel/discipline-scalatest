@@ -33,13 +33,14 @@ lazy val docs = project
   .settings(
     tlSiteHelium ~= {
       import laika.helium.config.*
+      def textLink(p: (String, URL)) = TextLink.external(p._2.toString(), p._1)
+
       _.site.mainNavigation(
         appendLinks = Seq(
           ThemeNavigationSection(
-            "Related Projects", {
-              val (text, url) = TypelevelProject.Discipline
-              TextLink.external(url.toString(), text)
-            }
+            "Related Projects",
+            textLink(TypelevelProject.Cats),
+            textLink(TypelevelProject.Discipline)
           )
         )
       )
