@@ -1,6 +1,6 @@
 ThisBuild / tlBaseVersion := "2.3"
 
-ThisBuild / crossScalaVersions := Seq("2.12.19", "3.3.3", "2.13.13")
+ThisBuild / crossScalaVersions := Seq("2.12.19", "3.3.3", "2.13.14")
 ThisBuild / tlVersionIntroduced := Map("3" -> "2.1.5")
 
 ThisBuild / startYear := Some(2019)
