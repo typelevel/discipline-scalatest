@@ -25,7 +25,7 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     )
   )
   .nativeSettings(
-    tlVersionIntroduced := Map("2.12" -> "2.1.3", "2.13" -> "2.1.3", "3" -> "2.2.0")
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.3.0").toMap
   )
 
 lazy val docs = project
