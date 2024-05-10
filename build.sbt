@@ -19,13 +19,13 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .settings(
     name := "discipline-scalatest",
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "discipline-core" % "1.6.0",
-      "org.scalatestplus" %%% "scalacheck-1-16" % "3.2.14.0",
+      "org.typelevel" %%% "discipline-core" % "1.7.0",
+      "org.scalatestplus" %%% "scalacheck-1-18" % "3.2.18.0",
       "org.scalatest" %%% "scalatest" % "3.2.18"
     )
   )
   .nativeSettings(
-    tlVersionIntroduced := Map("2.12" -> "2.1.3", "2.13" -> "2.1.3", "3" -> "2.2.0")
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.3.0").toMap
   )
 
 lazy val docs = project
