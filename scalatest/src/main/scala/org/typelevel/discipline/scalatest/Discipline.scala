@@ -75,7 +75,10 @@ trait FlatSpecDiscipline extends Discipline { self: AnyFlatSpecLike with Configu
     }
 }
 
-trait FreeSpecDiscipline extends Discipline { self: AnyFreeSpecLike with Configuration =>
+// Inherits `AnyFreeSpecLike` to access `FreeSpecStringWrapper`. Until Scala
+// 2.13, it was possible to access protected fields of a self-type, but this
+// behavior was removed in Scala 3.
+trait FreeSpecDiscipline extends AnyFreeSpecLike with Discipline { self: Configuration =>
   final def checkAll(name: String,
                      ruleSet: Laws#RuleSet
   )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
