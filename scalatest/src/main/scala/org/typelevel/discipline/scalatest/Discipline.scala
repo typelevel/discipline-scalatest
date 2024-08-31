@@ -25,6 +25,7 @@ package scalatest
 import org.scalactic.Prettifier
 import org.scalactic.source.Position
 import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.funspec.AnyFunSpecLike
 import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatest.prop.Configuration
@@ -71,6 +72,18 @@ trait FlatSpecDiscipline extends Discipline { self: AnyFlatSpecLike with Configu
           it should id in Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
 
       case Nil =>
+    }
+}
+
+trait FreeSpecDiscipline extends Discipline { self: AnyFreeSpecLike with Configuration =>
+  final def checkAll(name: String,
+                     ruleSet: Laws#RuleSet
+  )(implicit config: PropertyCheckConfiguration, prettifier: Prettifier, pos: Position): Unit =
+    name - {
+      for ((id, prop) <- ruleSet.all.properties)
+        id in {
+          Checkers.check(prop)(convertConfiguration(config), prettifier, pos)
+        }
     }
 }
 
