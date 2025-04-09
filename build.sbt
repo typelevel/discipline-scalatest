@@ -21,7 +21,10 @@ lazy val scalatest = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "discipline-core" % "1.7.0",
       "org.scalatestplus" %%% "scalacheck-1-18" % "3.2.19.0",
-      "org.scalatest" %%% "scalatest" % "3.2.19"
+      "org.scalatest" %%% "scalatest-funspec" % "3.2.19",
+      "org.scalatest" %%% "scalatest-flatspec" % "3.2.19",
+      "org.scalatest" %%% "scalatest-funsuite" % "3.2.19",
+      "org.scalatest" %%% "scalatest-wordspec" % "3.2.19"
     )
   )
   .nativeSettings(
